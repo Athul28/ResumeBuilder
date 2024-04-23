@@ -14,6 +14,19 @@ function Home() {
     setUserDetails({ ...userDetails, [name]: value });
   };
 
+  const [formData, setFormData] = useState({
+    companyName: "",
+    jobTitle: "",
+    startDate: "",
+    endDate: "",
+    description: "",
+  });
+
+  const handleExpInputChange = (event) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+  };
+
+
   const [experiences, setExperiences] = useState([]);
 
   const handleSubmit = (event) => {
@@ -29,20 +42,51 @@ function Home() {
 
     setExperiences([...experiences, newExperience]);
 
-    // Reset the form after submission
-    event.target.reset(); // Reset the form
+    setFormData({
+      companyName: "",
+      jobTitle: "",
+      startDate: "",
+      endDate: "",
+      description: "",
+    });
   };
+
+  const handleDelete = (index) => {
+    const updatedExperiences = experiences.filter(
+      (experience, i) => i !== index
+    );
+    setExperiences(updatedExperiences);
+  };
+
+  //Skills
+  const [skills,setSkills]=useState([])
+
+  //Project
+  const [projects,setProjects]=useState([])
+
+  //Education
+  const [education,setEducation]=useState([])
 
   return (
     <>
-      <p>Resume Builder</p>
+      <p className="text-2xl p-3">Resume Builder</p>
       <div className="lg:flex">
         <UserInput
           userDetails={userDetails}
           onInputChange={handleInputChange}
           handleSubmit={handleSubmit}
+          experiences={experiences}
+          handleDelete={handleDelete}
+          formData={formData}
+          handleInputChange={handleExpInputChange}
+          skills={skills}
+          setSkills={setSkills}
+          projects={projects}
+          setProjects={setProjects}
+          education={education}
+          setEducation={setEducation}
         />
-        <UserResume userDetails={userDetails} experiences={experiences} />
+        <UserResume userDetails={userDetails} experiences={experiences} skills={skills} education={education} projects={projects}/>
       </div>
     </>
   );

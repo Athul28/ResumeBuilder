@@ -16,8 +16,16 @@
   .resume-subheading{
     @apply font-bold text-lg;
   }
+  .input-title{
+    @apply text-2xl mb-2;
+  }
 }
 
 body{
   background-color: #96B6C5;
+}
+
+.noto-sans {
+  font-family: "Noto Sans", sans-serif;
+  font-optical-sizing: auto;
 }

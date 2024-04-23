@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import html2pdf from "html2pdf.js";
 
-function UserResume({ userDetails, experiences }) {
+function UserResume({ userDetails, experiences, skills, education, projects }) {
   const resumeRef = useRef(null);
 
   const handleDownload = () => {
@@ -17,37 +17,81 @@ function UserResume({ userDetails, experiences }) {
 
   return (
     <div className="p-10 w-full" id="user-resume-2">
-      <div className="p-10 bg-[#F1F0E8]" ref={resumeRef}>
+      <div className="p-10 bg-[#F1F0E8] shadow-xl" ref={resumeRef}>
         <p className="text-center text-3xl font-bold">{userDetails.name}</p>
+        <br />
         <div className="flex justify-center">
-          <p className="w-full text-right px-2">Email : {userDetails.email}</p>
+          <p className="w-[50%] text-right px-2">Email : {userDetails.email}</p>
           <span>|</span>
-          <p className="w-full px-2">PhoneNo : {userDetails.phoneno}</p>
+          <p className="w-[50%] px-2">PhoneNo : {userDetails.phoneno}</p>
         </div>
         <br />
         <hr className="border border-black" />
         <div>
-          <p className="resume-heading">Description : </p>
+          <p className="resume-heading">Description</p>
           <p>{userDetails.description}</p>
         </div>
         <br />
         <hr className="border border-black" />
         <div>
-          <div className="resume-heading">Experience : </div>
-          {/* Mapping through experiences */}
-          {experiences.map((experience, index) => (
-            <div key={index}>
-              <p>Company Name: {experience.companyName}</p>
-              <p>Job Title: {experience.jobTitle}</p>
-              <p>Start Date: {experience.startDate}</p>
-              <p>End Date: {experience.endDate}</p>
-              <p>Description: {experience.description}</p>
-              <hr className="border border-black" />
+          <p className="resume-heading">Experience</p>
+          <ul className="list-disc">
+            {experiences.map((experience, index) => (
+              <li key={index}>
+                <p className="font-bold">Job Title: {experience.jobTitle}</p>
+                <p>Company Name: {experience.companyName}</p>
+                <p>Start Date: {experience.startDate}</p>
+                <p>End Date: {experience.endDate}</p>
+                <p>Description: {experience.description}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <br />
+        <hr className="border border-black" />
+        <div>
+          <p className="resume-heading">Projects</p>
+          <ul className="list-disc">
+            {projects.map((p, index) => (
+              <li key={index}>
+                <p className="font-bold">{p.name}</p>
+                <p>{p.description}</p>
+                <a href={p.link}>{p.link}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <br />
+        <hr className="border border-black" />
+        <div>
+          <p className="resume-heading">Education</p>
+          {education.map((edu, index) => (
+            <div>
+              <p>{edu.collegeName}</p>
+              <p>{edu.degree}</p>
+              <p>{edu.completionDate}</p>
+              <p>{edu.marks}</p>
+            </div>
+          ))}
+        </div>
+        <br />
+        <hr className="border border-black" />
+        <div>
+          <p className="resume-heading">Skills</p>
+          {skills.map((skill, index) => (
+            <div>
+              <p>{skill}</p>
             </div>
           ))}
         </div>
       </div>
-      <button onClick={handleDownload}>Download Resume</button>
+
+      <button
+        onClick={handleDownload}
+        className="bg-cyan-700 text-white p-2 mt-2"
+      >
+        Download Resume
+      </button>
     </div>
   );
 }
