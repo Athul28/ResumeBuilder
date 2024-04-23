@@ -9,19 +9,18 @@ function Home() {
     phoneno: "",
     description: "",
   });
-
-  const [experiences, setExperiences] = useState([]);
-
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserDetails({ ...userDetails, [name]: value });
   };
 
+  const [experiences, setExperiences] = useState([]);
+
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault(); // Prevent default form submission behavior
 
     const newExperience = {
-      companyName: event.target.companyName.value, // Access from event object
+      companyName: event.target.companyName.value,
       jobTitle: event.target.jobTitle.value,
       startDate: event.target.startDate.value,
       endDate: event.target.endDate.value,
@@ -31,27 +30,22 @@ function Home() {
     setExperiences([...experiences, newExperience]);
 
     // Reset the form after submission
-    setFormData({ // Assuming formData is not needed in Home
-      companyName: '',
-      jobTitle: '',
-      startDate: '',
-      endDate: '',
-      description: '',
-    });
+    event.target.reset(); // Reset the form
   };
 
   return (
-    <div>
-      {/* ... */}
-      <UserInput
-        userDetails={userDetails}
-        onInputChange={handleInputChange}
-        handleSubmit={handleSubmit}
-      />
-      <UserResume userDetails={userDetails} experiences={experiences} />
-    </div>
+    <>
+      <p>Resume Builder</p>
+      <div className="lg:flex">
+        <UserInput
+          userDetails={userDetails}
+          onInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+        />
+        <UserResume userDetails={userDetails} experiences={experiences} />
+      </div>
+    </>
   );
 }
-
 
 export default Home;
