@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Navigate, Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../../contexts/authContext";
-import { doCreateUserWithEmailAndPassword } from "../../../firebase/auth";
+import { useAuth } from "../../contexts/authContext";
+import { doCreateUserWithEmailAndPassword } from "../../firebase/auth";
 
 function Register() {
   const navigate = useNavigate();
@@ -24,10 +24,10 @@ function Register() {
 
   return (
     <div>
-      {userLoggedIn && <Navigate to={"/home"} replace={true} />}
+      {userLoggedIn && <Navigate to={"/"} replace={true} />}
 
-      <main className="w-full h-screen flex self-center place-content-center place-items-center">
-        <div className="w-96 text-gray-600 space-y-5 p-4 shadow-xl border rounded-xl">
+      <main className="w-full h-screen flex self-center place-content-center place-items-center bg-[#96B6C5]">
+        <div className="w-96 text-gray-600 space-y-5 p-4 shadow-xl border rounded-xl bg-white">
           <div className="text-center mb-6">
             <div className="mt-2">
               <h3 className="text-gray-800 text-xl font-semibold sm:text-2xl">

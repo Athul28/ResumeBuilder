@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
 import { doSignOut } from "../firebase/auth";
@@ -8,67 +8,47 @@ function Header() {
   const { userLoggedIn } = useAuth();
   const { currentUser } = useAuth();
 
-  const [logoutMenu, setLogoutMenu] = useState(false);
-
-  useEffect(() => {
-    setLogoutMenu(false);
-  }, [userLoggedIn]);
-
-  const logoutMenuHandler = (e) => {
-    e.preventDefault();
-    setLogoutMenu(!logoutMenu);
-  };
 
   return (
-    <nav className="flex flex-row gap-x-2 w-full z-20 fixed top-0 left-0 border-b place-content-center items-center bg-gray-200">
+    <nav className="flex flex-row gap-x-2 w-full z-20 p-2 fixed justify-between items-center bg-cyan-700 text-white">
       {userLoggedIn ? (
         <>
-        <p className="m-3 font-bold text-xl">Resume Builder</p>
+          <p className="m-3 font-bold text-2xl text-white">Resume Builder</p>
           <div
             className="ml-auto flex justify-center items-center p-2 space-x-2 hover:cursor-pointer"
-            onClick={logoutMenuHandler}
           >
-            <p>{currentUser.displayName}</p>
+            <p className="text-xl">{currentUser.displayName}</p>
             <img
               src={currentUser.photoURL}
-              alt=""
+              alt="Profile Image"
               className="rounded-full h-10 w-10"
             />
+            <button
+              onClick={() => {
+                doSignOut().then(() => {
+                  navigate("/login");
+                });
+              }}
+              className="text-sm bg-red-600 p-2 rounded-md"
+            >
+              Logout
+            </button>
           </div>
-          {logoutMenu && (
-            <div className="absolute border border-black top-16 text-center right-0 w-fit bg-white p-3 mx-2">
-                <p>{currentUser.email}</p>
-              <button
-                onClick={() => {
-                  doSignOut().then(() => {
-                    navigate("/login");
-                  });
-                }}
-                className="text-sm text-blue-600 underline"
-              >
-                Logout
-              </button>
-            </div>
-          )}
-          {/* <button
-            onClick={() => {
-              doSignOut().then(() => {
-                navigate("/login");
-              });
-            }}
-            className="text-sm text-blue-600 underline"
-          >
-            Logout
-          </button> */}
         </>
       ) : (
         <>
-          <Link className="text-sm text-blue-600 underline" to={"/login"}>
-            Login
-          </Link>
-          <Link className="text-sm text-blue-600 underline" to={"/register"}>
-            Register New Account
-          </Link>
+          <p className="text-2xl text-white">Resume Builder</p>
+          <div className="flex space-x-3 text-white my-2 mx-4">
+            <Link className="hover:underline" to={"/"}>
+              Home
+            </Link>
+            <Link className="hover:underline" to={"/login"}>
+              Login
+            </Link>
+            <Link className="hover:underline" to={"/register"}>
+              Register New Account
+            </Link>
+          </div>
         </>
       )}
     </nav>

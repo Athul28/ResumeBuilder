@@ -2,22 +2,23 @@ import Home from "./pages/Home";
 import Login from "./components/auth/Login";
 import { useRoutes } from "react-router-dom";
 import { AuthProvider } from "./contexts/authContext";
-import Header from "./components/header";
+import Header from "./components/Header";
+import Register from "./components/auth/Register"
 
 function App() {
   const routesArray = [
     {
-      path: "*",
-      element: <Login />,
-    },
-    {
-      path: "/home",
+      path: "/",
       element: <Home />,
     },
     {
       path: "/login",
       element: <Login />,
     },
+    {
+      path:"/register",
+      element:<Register />
+    }
   ];
   let routesElement = useRoutes(routesArray);
 

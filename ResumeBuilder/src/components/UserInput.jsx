@@ -98,8 +98,8 @@ function UserInput({
   };
 
   return (
-    <div className="p-10 w-full">
-      <div className="text-center p-10 bg-[#ADC4CE] shadow-xl">
+    <div className="p-10 lg:w-3/5 w-full">
+      <div className="p-10 bg-[#ADC4CE] shadow-xl">
         <p className="input-title">Enter your personal details : </p>
         <label htmlFor="name">Enter your full name : </label>
         <input

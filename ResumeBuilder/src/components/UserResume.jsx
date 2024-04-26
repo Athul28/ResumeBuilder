@@ -16,8 +16,10 @@ function UserResume({ userDetails, experiences, skills, education, projects }) {
   };
 
   return (
-    <div className="p-10 w-full" id="user-resume-2">
-      <div className="p-10 bg-[#F1F0E8] shadow-xl" ref={resumeRef}>
+    <div className="max-lg:p-3 p-10 w-full" id="user-resume-2">
+      <div className="overflow-auto">
+
+      <div className="p-10 bg-white shadow-xl w-[800px]" ref={resumeRef}>
         <p className="text-center text-3xl font-bold">{userDetails.name}</p>
         <br />
         <div className="flex justify-center">
@@ -86,6 +88,7 @@ function UserResume({ userDetails, experiences, skills, education, projects }) {
         </div>
       </div>
 
+      </div>
       <button
         onClick={handleDownload}
         className="bg-cyan-700 text-white p-2 mt-2"
