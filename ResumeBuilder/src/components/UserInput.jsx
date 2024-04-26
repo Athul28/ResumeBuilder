@@ -16,6 +16,7 @@ function UserInput({
   setProjects,
   education,
   setEducation,
+  handleBackendDataSubmit
 }) {
   const [newSkill, setNewSkill] = useState("");
   const handleSkills = (e) => {
@@ -61,12 +62,12 @@ function UserInput({
     });
   };
 
-  const handleDeleteProject=(index)=>{
-    const newProjects=projects.filter((project,i)=>{
-      return i!==index
-    })
-    setProjects(newProjects)
-  }
+  const handleDeleteProject = (index) => {
+    const newProjects = projects.filter((project, i) => {
+      return i !== index;
+    });
+    setProjects(newProjects);
+  };
 
   //Education
 
@@ -101,44 +102,48 @@ function UserInput({
     <div className="p-10 lg:w-3/5 w-full">
       <div className="p-10 bg-[#ADC4CE] shadow-xl">
         <p className="input-title">Enter your personal details : </p>
-        <label htmlFor="name">Enter your full name : </label>
-        <input
-          type="text"
-          name="name"
-          value={userDetails.name}
-          placeholder="Name"
-          onChange={onInputChange}
-          className="input-field"
-        />
-        <br />
-        <label htmlFor="email">Enter your email : </label>
-        <input
-          type="email"
-          name="email"
-          value={userDetails.email}
-          placeholder="Email"
-          onChange={onInputChange}
-          className="input-field"
-        />
-        <br />
-        <label htmlFor="phoneno">Enter your phone number : </label>
-        <input
-          type="tel"
-          name="phoneno"
-          value={userDetails.phoneno}
-          placeholder="Phone Number"
-          onChange={onInputChange}
-          className="input-field"
-        />
-        <br />
-        <label htmlFor="description">Enter your description : </label>
-        <textarea
-          name="description"
-          value={userDetails.description}
-          placeholder="Description"
-          onChange={onInputChange}
-          className="input-field"
-        />
+        <form onSubmit={handleBackendDataSubmit}>
+          <label htmlFor="name">Enter your full name : </label>
+          <input
+            type="text"
+            name="name"
+            value={userDetails.name}
+            placeholder="Name"
+            onChange={onInputChange}
+            className="input-field"
+          />
+          <br />
+          <label htmlFor="email">Enter your email : </label>
+          <input
+            type="email"
+            name="email"
+            value={userDetails.email}
+            placeholder="Email"
+            onChange={onInputChange}
+            className="input-field"
+          />
+          <br />
+          <label htmlFor="phoneno">Enter your phone number : </label>
+          <input
+            type="tel"
+            name="phoneno"
+            value={userDetails.phoneno}
+            placeholder="Phone Number"
+            onChange={onInputChange}
+            className="input-field"
+          />
+          <br />
+          <label htmlFor="description">Enter your description : </label>
+          <textarea
+            name="description"
+            value={userDetails.description}
+            placeholder="Description"
+            onChange={onInputChange}
+            className="input-field"
+          />
+          <br />
+          <button type="submit" className="bg-cyan-700 text-white p-2 mt-2">Add</button>
+        </form>
         <hr className="border-black m-4" />
         {/* Experiences input */}
         <p className="input-title">Experiences : </p>
@@ -257,14 +262,17 @@ function UserInput({
           </button>
         </form>
         {projects.map((project, index) => (
-          <div key={index} className="flex w-[250px] rounded-md mx-auto text-white justify-between p-2 bg-cyan-700 mt-3">
+          <div
+            key={index}
+            className="flex w-[250px] rounded-md mx-auto text-white justify-between p-2 bg-cyan-700 mt-3"
+          >
             <p>{project.name}</p>
             <div
-                className="bg-red-600 h-fit my-auto text-xl text-white p-1 rounded-sm mx-2 cursor-pointer"
-                onClick={() => handleDeleteProject(index)}
-              >
-                <MdDelete />
-              </div>
+              className="bg-red-600 h-fit my-auto text-xl text-white p-1 rounded-sm mx-2 cursor-pointer"
+              onClick={() => handleDeleteProject(index)}
+            >
+              <MdDelete />
+            </div>
           </div>
         ))}
 

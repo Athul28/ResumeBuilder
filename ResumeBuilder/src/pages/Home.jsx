@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/authContext";
 import UserInput from "../components/UserInput";
 import UserResume from "../components/UserResume";
-import { query, collection, where, onSnapshot } from "firebase/firestore";
+import { collection, updateDoc, getDocs, query, where, addDoc, onSnapshot  } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 
 function Home() {
   const [users, setUsers] = useState([]);
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const { currentUser } = useAuth();
   const { userLoggedIn } = useAuth();
@@ -29,15 +30,56 @@ function Home() {
         }));
         setUsers(usersData);
         setLoading(false);
-        setUserDetails(prevUserDetails => ({
-          ...prevUserDetails,
-          name: currentUser.displayName,
-          email: currentUser.email,
-        }))
+        if (usersData.length > 0) {
+          const firstUser = usersData[0];
+          setUserDetails((prevUserDetails) => ({
+            ...prevUserDetails,
+            name: currentUser.displayName,
+            email: currentUser.email,
+            phoneno: firstUser.phoneNo,
+            description:firstUser.description
+          }));
+        }
       });
       return unsubscribe;
     }
   }, [currentUser]);
+
+  const handleBackendDataSubmit = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const userQuery = query(collection(db, "users"), where("userId", "==", currentUser.uid));
+      const querySnapshot = await getDocs(userQuery);
+  
+      if (!querySnapshot.empty) {
+        const docRef = querySnapshot.docs[0].ref;
+        // Ensure description is defined before updating Firestore
+        const updatedData = {
+          phoneNo: userDetails.phoneno || "", // Use empty string if phoneno is undefined
+          description: userDetails.description || "", // Use empty string if description is undefined
+          createdAt: new Date(),
+        };
+        await updateDoc(docRef, updatedData);
+      } else {
+        // Create a new document with user details
+        await addDoc(collection(db, "users"), {
+          phoneNo: userDetails.phoneno || "", // Use empty string if phoneno is undefined
+          description: userDetails.description || "", // Use empty string if description is undefined
+          createdAt: new Date(),
+          userId: currentUser.uid,
+          displayName: currentUser.displayName,
+          email: currentUser.email,
+          photoURL: currentUser.photoURL,
+        });
+      }
+      setError(null);
+    } catch (err) {
+      setError("Failed to submit: " + err.message);
+    }
+  };
+  
+  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -60,7 +102,6 @@ function Home() {
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission behavior
-
     const newExperience = {
       companyName: event.target.companyName.value,
       jobTitle: event.target.jobTitle.value,
@@ -113,6 +154,7 @@ function Home() {
           setProjects={setProjects}
           education={education}
           setEducation={setEducation}
+          handleBackendDataSubmit={handleBackendDataSubmit}
         />
         <UserResume
           userDetails={userDetails}

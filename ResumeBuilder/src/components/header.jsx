@@ -13,7 +13,7 @@ function Header() {
     <nav className="flex flex-row gap-x-2 w-full z-20 p-2 fixed justify-between items-center bg-cyan-700 text-white">
       {userLoggedIn ? (
         <>
-          <p className="m-3 font-bold text-2xl text-white">Resume Builder</p>
+          <p className="m-3 font-bold text-2xl text-white ml-5">Resume Builder</p>
           <div
             className="ml-auto flex justify-center items-center p-2 space-x-2 hover:cursor-pointer"
           >
@@ -37,7 +37,7 @@ function Header() {
         </>
       ) : (
         <>
-          <p className="text-2xl text-white">Resume Builder</p>
+          <p className="text-2xl text-white ml-5">Resume Builder</p>
           <div className="flex space-x-3 text-white my-2 mx-4">
             <Link className="hover:underline" to={"/"}>
               Home
