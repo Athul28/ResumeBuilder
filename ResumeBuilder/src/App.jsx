@@ -2,7 +2,7 @@ import Home from "./pages/Home";
 import Login from "./components/auth/Login";
 import { useRoutes } from "react-router-dom";
 import { AuthProvider } from "./contexts/authContext";
-import Header from "./components/Header";
+import Header from "./components/header";
 import Register from "./components/auth/Register"
 
 function App() {
