@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MdDelete } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
 
@@ -16,7 +16,11 @@ function UserInput({
   setProjects,
   education,
   setEducation,
-  handleBackendDataSubmit
+  handleBackendDataSubmit,
+  addSkillToBackend,
+  addExperienceToBackend,
+  addProjectsToBackend,
+  addEducationToBackend,
 }) {
   const [newSkill, setNewSkill] = useState("");
   const handleSkills = (e) => {
@@ -24,8 +28,11 @@ function UserInput({
   };
 
   const handleAddSkill = (e) => {
-    setSkills((s) => [...s, newSkill]);
-    setNewSkill("");
+    e.preventDefault();
+    if (newSkill.trim() !== "") {
+      setSkills((s) => [...s, newSkill]);
+      setNewSkill("");
+    }
   };
 
   const handleDeleteSkill = (index) => {
@@ -98,6 +105,13 @@ function UserInput({
     });
   };
 
+  const handleDeleteEducation = (index) => {
+    const newEducation = education.filter((edu, i) => {
+      return i !== index;
+    });
+    setEducation(newEducation);
+  };
+
   return (
     <div className="p-10 lg:w-3/5 w-full">
       <div className="p-10 bg-[#ADC4CE] shadow-xl">
@@ -142,7 +156,9 @@ function UserInput({
             className="input-field"
           />
           <br />
-          <button type="submit" className="bg-cyan-700 text-white p-2 mt-2">Add</button>
+          <button type="submit" className="bg-green-600 text-white p-2 mt-2">
+            Save
+          </button>
         </form>
         <hr className="border-black m-4" />
         {/* Experiences input */}
@@ -155,6 +171,7 @@ function UserInput({
             name="companyName"
             value={formData.companyName}
             onChange={handleInputChange}
+            placeholder="Company name"
             className="input-field"
             required
           />
@@ -164,6 +181,7 @@ function UserInput({
             type="text"
             id="jobTitle"
             name="jobTitle"
+            placeholder="Job Title"
             value={formData.jobTitle}
             onChange={handleInputChange}
             className="input-field"
@@ -194,6 +212,7 @@ function UserInput({
           <textarea
             id="description"
             name="description"
+            placeholder="Description"
             value={formData.description}
             onChange={handleInputChange}
             className="input-field"
@@ -201,13 +220,20 @@ function UserInput({
           <br />
           <button type="submit" className="bg-cyan-700 text-white p-2 mt-2">
             Add Experience
-          </button>
+          </button>        <button
+          onClick={addExperienceToBackend}
+          className="bg-green-600 m-2 p-2 text-white rounded-sm"
+          formNoValidate
+        >
+          Save
+        </button>
         </form>
+
         <div>
           {experiences.map((experience, index) => (
             <div
               key={index}
-              className="flex w-[250px] rounded-md mx-auto justify-between p-2 bg-cyan-700 mt-3"
+              className="flex w-[250px] rounded-md mx-auto justify-between p-2 bg-cyan-900 mt-3"
             >
               <div className="text-white">
                 <p className="text-xl">{experience.jobTitle}</p>
@@ -232,6 +258,7 @@ function UserInput({
             type="text"
             id="name"
             name="name"
+            placeholder="Project Name"
             value={projectData.name}
             onChange={handleProjectChange}
             className="input-field"
@@ -239,10 +266,10 @@ function UserInput({
           />
           <br />
           <label htmlFor="description">Project description : </label>
-          <input
-            type="text"
+          <textarea
             name="description"
             value={projectData.description}
+            placeholder="Description"
             onChange={handleProjectChange}
             className="input-field"
             required
@@ -252,6 +279,7 @@ function UserInput({
           <input
             type="text"
             name="link"
+            placeholder="Link"
             value={projectData.link}
             onChange={handleProjectChange}
             className="input-field"
@@ -259,12 +287,18 @@ function UserInput({
           <br />
           <button type="submit" className="bg-cyan-700 text-white p-2 mt-2">
             Add Project
-          </button>
+          </button>        <button
+          onClick={addProjectsToBackend}
+          className="bg-green-600 text-white p-2 m-2" formNoValidate
+        >
+          Save
+        </button>
         </form>
+
         {projects.map((project, index) => (
           <div
             key={index}
-            className="flex w-[250px] rounded-md mx-auto text-white justify-between p-2 bg-cyan-700 mt-3"
+            className="flex w-[250px] rounded-md mx-auto text-white justify-between p-2 bg-cyan-900 mt-3"
           >
             <p>{project.name}</p>
             <div
@@ -285,6 +319,7 @@ function UserInput({
             type="text"
             name="collegeName"
             value={educationData.collegeName}
+            placeholder="College Name"
             onChange={handleEducationChange}
             className="input-field"
           />
@@ -294,6 +329,7 @@ function UserInput({
             type="text"
             name="degree"
             value={educationData.degree}
+            placeholder="Degree"
             onChange={handleEducationChange}
             className="input-field"
           />
@@ -313,17 +349,31 @@ function UserInput({
             name="marks"
             value={educationData.marks}
             onChange={handleEducationChange}
+            placeholder="Percentage/CGPA"
             className="input-field"
           />
           <br />
           <button type="submit" className="bg-cyan-700 text-white p-2 mt-2">
             Add Details
-          </button>
+          </button>        <button
+          onClick={addEducationToBackend}
+          className="bg-green-600 text-white p-2 m-2"
+          formNoValidate
+        >
+          Save
+        </button>
         </form>
+
         {education.map((edu, index) => (
-          <div key={index}>
+          <div key={index}
+          className="flex w-[250px] rounded-md mx-auto text-white justify-between p-2 bg-cyan-900 mt-3">
             <p>{edu.collegeName}</p>
-            {/* Display other education details */}
+            <div
+              className="bg-red-600 h-fit my-auto text-xl text-white p-1 rounded-sm mx-2 cursor-pointer"
+              onClick={() => handleDeleteEducation(index)}
+            >
+              <MdDelete />
+            </div>
           </div>
         ))}
 
@@ -333,6 +383,7 @@ function UserInput({
           type="text"
           value={newSkill}
           onChange={handleSkills}
+          placeholder="Skills"
           className="input-field"
         />
         <button
@@ -341,11 +392,17 @@ function UserInput({
         >
           Add
         </button>
+        <button
+          onClick={addSkillToBackend}
+          className="bg-cyan-700 m-2 p-2 text-white rounded-sm"
+        >
+          Save
+        </button>
         <div className="flex flex-wrap">
           {skills.map((skill, index) => (
             <div
               key={index}
-              className="flex w-fit bg-cyan-700 text-white px-3 py-1 m-2 rounded-xl"
+              className="flex w-fit bg-cyan-900 text-white px-3 py-1 m-2 rounded-xl"
             >
               <p className="text-xl">{skill}</p>
               <IoClose

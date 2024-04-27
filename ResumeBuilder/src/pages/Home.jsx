@@ -39,6 +39,16 @@ function Home() {
             phoneno: firstUser.phoneNo,
             description:firstUser.description
           }));
+          setSkills(firstUser.skills);
+          if(firstUser.experiences){
+            setExperiences(firstUser.experiences)
+          }
+          if(firstUser.education){
+            setEducation(firstUser.education)
+          }
+          if(firstUser.projects){
+            setProjects(firstUser.projects)
+          }
         }
       });
       return unsubscribe;
@@ -78,6 +88,41 @@ function Home() {
       setError("Failed to submit: " + err.message);
     }
   };
+
+    //Skills
+    const [skills, setSkills] = useState([]);
+
+
+  const addSkillToBackend = async()=>{
+    try {
+      const userQuery = query(collection(db, "users"), where("userId", "==", currentUser.uid));
+      const querySnapshot = await getDocs(userQuery);
+  
+      if (!querySnapshot.empty) {
+        const docRef = querySnapshot.docs[0].ref;
+        // Ensure description is defined before updating Firestore
+        // console.log(skills)
+        const updatedData = {
+          skills:skills,
+          createdAt: new Date(),
+        };
+        await updateDoc(docRef, updatedData);
+      } else {
+        // Create a new document with user details
+        await addDoc(collection(db, "users"), {
+          skills:skills,
+          createdAt: new Date(),
+          userId: currentUser.uid,
+          displayName: currentUser.displayName,
+          email: currentUser.email,
+          photoURL: currentUser.photoURL,
+        });
+      }
+      setError(null);
+    } catch (err) {
+      setError("Failed to submit: " + err.message);
+    }
+  }
   
   
 
@@ -128,14 +173,107 @@ function Home() {
     setExperiences(updatedExperiences);
   };
 
-  //Skills
-  const [skills, setSkills] = useState([]);
+  const addExperienceToBackend =async()=>{
+    console.log("Working");
+    try {
+      const userQuery = query(collection(db, "users"), where("userId", "==", currentUser.uid));
+      const querySnapshot = await getDocs(userQuery);
+  
+      if (!querySnapshot.empty) {
+        const docRef = querySnapshot.docs[0].ref;
+        // Ensure description is defined before updating Firestore
+        // console.log(skills)
+        const updatedData = {
+          experiences:experiences,
+          createdAt: new Date(),
+        };
+        await updateDoc(docRef, updatedData);
+      } else {
+        // Create a new document with user details
+        await addDoc(collection(db, "users"), {
+          experiences:experiences,
+          createdAt: new Date(),
+          userId: currentUser.uid,
+          displayName: currentUser.displayName,
+          email: currentUser.email,
+          photoURL: currentUser.photoURL,
+        });
+      }
+      setError(null);
+    } catch (err) {
+      setError("Failed to submit: " + err.message);
+    }
+  }
 
   //Project
   const [projects, setProjects] = useState([]);
 
+  const addProjectsToBackend =async()=>{
+    console.log("Working");
+    try {
+      const userQuery = query(collection(db, "users"), where("userId", "==", currentUser.uid));
+      const querySnapshot = await getDocs(userQuery);
+  
+      if (!querySnapshot.empty) {
+        const docRef = querySnapshot.docs[0].ref;
+        // Ensure description is defined before updating Firestore
+        // console.log(skills)
+        const updatedData = {
+          projects:projects,
+          createdAt: new Date(),
+        };
+        await updateDoc(docRef, updatedData);
+      } else {
+        // Create a new document with user details
+        await addDoc(collection(db, "users"), {
+          projects:projects,
+          createdAt: new Date(),
+          userId: currentUser.uid,
+          displayName: currentUser.displayName,
+          email: currentUser.email,
+          photoURL: currentUser.photoURL,
+        });
+      }
+      setError(null);
+    } catch (err) {
+      setError("Failed to submit: " + err.message);
+    }
+  }
+
   //Education
   const [education, setEducation] = useState([]);
+
+  const addEducationToBackend =async()=>{
+    console.log("Working");
+    try {
+      const userQuery = query(collection(db, "users"), where("userId", "==", currentUser.uid));
+      const querySnapshot = await getDocs(userQuery);
+  
+      if (!querySnapshot.empty) {
+        const docRef = querySnapshot.docs[0].ref;
+        // Ensure description is defined before updating Firestore
+        // console.log(skills)
+        const updatedData = {
+          education:education,
+          createdAt: new Date(),
+        };
+        await updateDoc(docRef, updatedData);
+      } else {
+        // Create a new document with user details
+        await addDoc(collection(db, "users"), {
+          education:education,
+          createdAt: new Date(),
+          userId: currentUser.uid,
+          displayName: currentUser.displayName,
+          email: currentUser.email,
+          photoURL: currentUser.photoURL,
+        });
+      }
+      setError(null);
+    } catch (err) {
+      setError("Failed to submit: " + err.message);
+    }
+  }
 
   return (
     <>
@@ -155,6 +293,10 @@ function Home() {
           education={education}
           setEducation={setEducation}
           handleBackendDataSubmit={handleBackendDataSubmit}
+          addSkillToBackend={addSkillToBackend}
+          addExperienceToBackend={addExperienceToBackend}
+          addProjectsToBackend={addProjectsToBackend}
+          addEducationToBackend={addEducationToBackend}
         />
         <UserResume
           userDetails={userDetails}
