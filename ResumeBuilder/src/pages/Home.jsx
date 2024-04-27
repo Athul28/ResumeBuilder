@@ -310,7 +310,7 @@ function Home() {
           <ThreeDots className="m-auto"/>
           </div>
       ) : (
-        <div className={`lg:flex ${userLoggedIn ? "mt-12 max-sm:mt-[55px]" : "mt-6"}`}>
+        <div className={`lg:flex ${userLoggedIn ? "mt-12 max-sm:mt-[55px]" : "mt-6 max-sm:mt-[65px]"}`}>
           <UserInput
             userDetails={userDetails}
             onInputChange={handleInputChange}
