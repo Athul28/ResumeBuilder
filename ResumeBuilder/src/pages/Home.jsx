@@ -30,12 +30,15 @@ function Home() {
         }));
         setUsers(usersData);
         setLoading(false);
+        setUserDetails((prevUserDetails) => ({
+          ...prevUserDetails,
+          name: currentUser.displayName,
+          email: currentUser.email,
+        }));
         if (usersData.length > 0) {
           const firstUser = usersData[0];
           setUserDetails((prevUserDetails) => ({
             ...prevUserDetails,
-            name: currentUser.displayName,
-            email: currentUser.email,
             phoneno: firstUser.phoneNo,
             description:firstUser.description
           }));
