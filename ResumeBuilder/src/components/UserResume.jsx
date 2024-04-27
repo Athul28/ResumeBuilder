@@ -81,7 +81,7 @@ function UserResume({ userDetails, experiences, skills, education, projects }) {
         <div>
           <p className="resume-heading">Skills</p>
           {skills.map((skill, index) => (
-            <div>
+            <div key={index}>
               <p>{skill}</p>
             </div>
           ))}
