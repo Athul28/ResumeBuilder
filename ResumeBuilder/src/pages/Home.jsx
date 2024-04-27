@@ -2,8 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/authContext";
 import UserInput from "../components/UserInput";
 import UserResume from "../components/UserResume";
-import { collection, updateDoc, getDocs, query, where, addDoc, onSnapshot  } from "firebase/firestore";
+import {
+  collection,
+  updateDoc,
+  getDocs,
+  query,
+  where,
+  addDoc,
+  onSnapshot,
+} from "firebase/firestore";
 import { db } from "../firebase/firebase";
+import { ThreeDots } from 'react-loading-icons'
 
 function Home() {
   const [users, setUsers] = useState([]);
@@ -40,31 +49,36 @@ function Home() {
           setUserDetails((prevUserDetails) => ({
             ...prevUserDetails,
             phoneno: firstUser.phoneNo,
-            description:firstUser.description
+            description: firstUser.description,
           }));
           setSkills(firstUser.skills);
-          if(firstUser.experiences){
-            setExperiences(firstUser.experiences)
+          if (firstUser.experiences) {
+            setExperiences(firstUser.experiences);
           }
-          if(firstUser.education){
-            setEducation(firstUser.education)
+          if (firstUser.education) {
+            setEducation(firstUser.education);
           }
-          if(firstUser.projects){
-            setProjects(firstUser.projects)
+          if (firstUser.projects) {
+            setProjects(firstUser.projects);
           }
         }
       });
       return unsubscribe;
+    }else{
+      setLoading(false);
     }
   }, [currentUser]);
 
   const handleBackendDataSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
-      const userQuery = query(collection(db, "users"), where("userId", "==", currentUser.uid));
+      const userQuery = query(
+        collection(db, "users"),
+        where("userId", "==", currentUser.uid)
+      );
       const querySnapshot = await getDocs(userQuery);
-  
+
       if (!querySnapshot.empty) {
         const docRef = querySnapshot.docs[0].ref;
         // Ensure description is defined before updating Firestore
@@ -92,28 +106,30 @@ function Home() {
     }
   };
 
-    //Skills
-    const [skills, setSkills] = useState([]);
+  //Skills
+  const [skills, setSkills] = useState([]);
 
-
-  const addSkillToBackend = async()=>{
+  const addSkillToBackend = async () => {
     try {
-      const userQuery = query(collection(db, "users"), where("userId", "==", currentUser.uid));
+      const userQuery = query(
+        collection(db, "users"),
+        where("userId", "==", currentUser.uid)
+      );
       const querySnapshot = await getDocs(userQuery);
-  
+
       if (!querySnapshot.empty) {
         const docRef = querySnapshot.docs[0].ref;
         // Ensure description is defined before updating Firestore
         // console.log(skills)
         const updatedData = {
-          skills:skills,
+          skills: skills,
           createdAt: new Date(),
         };
         await updateDoc(docRef, updatedData);
       } else {
         // Create a new document with user details
         await addDoc(collection(db, "users"), {
-          skills:skills,
+          skills: skills,
           createdAt: new Date(),
           userId: currentUser.uid,
           displayName: currentUser.displayName,
@@ -125,9 +141,7 @@ function Home() {
     } catch (err) {
       setError("Failed to submit: " + err.message);
     }
-  }
-  
-  
+  };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -176,25 +190,28 @@ function Home() {
     setExperiences(updatedExperiences);
   };
 
-  const addExperienceToBackend =async()=>{
+  const addExperienceToBackend = async () => {
     console.log("Working");
     try {
-      const userQuery = query(collection(db, "users"), where("userId", "==", currentUser.uid));
+      const userQuery = query(
+        collection(db, "users"),
+        where("userId", "==", currentUser.uid)
+      );
       const querySnapshot = await getDocs(userQuery);
-  
+
       if (!querySnapshot.empty) {
         const docRef = querySnapshot.docs[0].ref;
         // Ensure description is defined before updating Firestore
         // console.log(skills)
         const updatedData = {
-          experiences:experiences,
+          experiences: experiences,
           createdAt: new Date(),
         };
         await updateDoc(docRef, updatedData);
       } else {
         // Create a new document with user details
         await addDoc(collection(db, "users"), {
-          experiences:experiences,
+          experiences: experiences,
           createdAt: new Date(),
           userId: currentUser.uid,
           displayName: currentUser.displayName,
@@ -206,30 +223,33 @@ function Home() {
     } catch (err) {
       setError("Failed to submit: " + err.message);
     }
-  }
+  };
 
   //Project
   const [projects, setProjects] = useState([]);
 
-  const addProjectsToBackend =async()=>{
+  const addProjectsToBackend = async () => {
     console.log("Working");
     try {
-      const userQuery = query(collection(db, "users"), where("userId", "==", currentUser.uid));
+      const userQuery = query(
+        collection(db, "users"),
+        where("userId", "==", currentUser.uid)
+      );
       const querySnapshot = await getDocs(userQuery);
-  
+
       if (!querySnapshot.empty) {
         const docRef = querySnapshot.docs[0].ref;
         // Ensure description is defined before updating Firestore
         // console.log(skills)
         const updatedData = {
-          projects:projects,
+          projects: projects,
           createdAt: new Date(),
         };
         await updateDoc(docRef, updatedData);
       } else {
         // Create a new document with user details
         await addDoc(collection(db, "users"), {
-          projects:projects,
+          projects: projects,
           createdAt: new Date(),
           userId: currentUser.uid,
           displayName: currentUser.displayName,
@@ -241,30 +261,33 @@ function Home() {
     } catch (err) {
       setError("Failed to submit: " + err.message);
     }
-  }
+  };
 
   //Education
   const [education, setEducation] = useState([]);
 
-  const addEducationToBackend =async()=>{
+  const addEducationToBackend = async () => {
     console.log("Working");
     try {
-      const userQuery = query(collection(db, "users"), where("userId", "==", currentUser.uid));
+      const userQuery = query(
+        collection(db, "users"),
+        where("userId", "==", currentUser.uid)
+      );
       const querySnapshot = await getDocs(userQuery);
-  
+
       if (!querySnapshot.empty) {
         const docRef = querySnapshot.docs[0].ref;
         // Ensure description is defined before updating Firestore
         // console.log(skills)
         const updatedData = {
-          education:education,
+          education: education,
           createdAt: new Date(),
         };
         await updateDoc(docRef, updatedData);
       } else {
         // Create a new document with user details
         await addDoc(collection(db, "users"), {
-          education:education,
+          education: education,
           createdAt: new Date(),
           userId: currentUser.uid,
           displayName: currentUser.displayName,
@@ -276,39 +299,47 @@ function Home() {
     } catch (err) {
       setError("Failed to submit: " + err.message);
     }
-  }
+  };
+
 
   return (
     <>
-      <div className={`lg:flex ${userLoggedIn ? 'mt-12':'mt-6'}`}>
-        <UserInput
-          userDetails={userDetails}
-          onInputChange={handleInputChange}
-          handleSubmit={handleSubmit}
-          experiences={experiences}
-          handleDelete={handleDelete}
-          formData={formData}
-          handleInputChange={handleExpInputChange}
-          skills={skills}
-          setSkills={setSkills}
-          projects={projects}
-          setProjects={setProjects}
-          education={education}
-          setEducation={setEducation}
-          handleBackendDataSubmit={handleBackendDataSubmit}
-          addSkillToBackend={addSkillToBackend}
-          addExperienceToBackend={addExperienceToBackend}
-          addProjectsToBackend={addProjectsToBackend}
-          addEducationToBackend={addEducationToBackend}
-        />
-        <UserResume
-          userDetails={userDetails}
-          experiences={experiences}
-          skills={skills}
-          education={education}
-          projects={projects}
-        />
-      </div>
+      {loading ? (
+        <div className="mt-[350px] text-white text-xl text-center">
+          Loading...
+          <ThreeDots className="m-auto"/>
+          </div>
+      ) : (
+        <div className={`lg:flex ${userLoggedIn ? "mt-12 max-sm:mt-[55px]" : "mt-6"}`}>
+          <UserInput
+            userDetails={userDetails}
+            onInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
+            experiences={experiences}
+            handleDelete={handleDelete}
+            formData={formData}
+            handleInputChange={handleExpInputChange}
+            skills={skills}
+            setSkills={setSkills}
+            projects={projects}
+            setProjects={setProjects}
+            education={education}
+            setEducation={setEducation}
+            handleBackendDataSubmit={handleBackendDataSubmit}
+            addSkillToBackend={addSkillToBackend}
+            addExperienceToBackend={addExperienceToBackend}
+            addProjectsToBackend={addProjectsToBackend}
+            addEducationToBackend={addEducationToBackend}
+          />
+          <UserResume
+            userDetails={userDetails}
+            experiences={experiences}
+            skills={skills}
+            education={education}
+            projects={projects}
+          />
+        </div>
+      )}
     </>
   );
 }

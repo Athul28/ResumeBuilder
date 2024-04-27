@@ -113,8 +113,8 @@ function UserInput({
   };
 
   return (
-    <div className="p-10 lg:w-3/5 w-full">
-      <div className="p-10 bg-[#ADC4CE] shadow-xl">
+    <div className="p-10 max-sm:p-3 lg:w-3/5 w-full">
+      <div className="p-10 max-sm:p-5 bg-[#ADC4CE] shadow-xl">
         <p className="input-title">Enter your personal details : </p>
         <form onSubmit={handleBackendDataSubmit}>
           <label htmlFor="name">Enter your full name : </label>
@@ -160,7 +160,7 @@ function UserInput({
             Save
           </button>
         </form>
-        <hr className="border-black m-4" />
+        <hr className="border-black my-4" />
         {/* Experiences input */}
         <p className="input-title">Experiences : </p>
         <form onSubmit={handleSubmit}>
@@ -250,7 +250,7 @@ function UserInput({
         </div>
 
         {/* Projects */}
-        <hr className="border-black m-4" />
+        <hr className="border-black my-4" />
         <p className="input-title">Add your Projects : </p>
         <form onSubmit={handleProjectsSubmission}>
           <label htmlFor="name">Project name : </label>
@@ -311,7 +311,7 @@ function UserInput({
         ))}
 
         {/* Education */}
-        <hr className="border-black m-4" />
+        <hr className="border-black my-4" />
         <p className="input-title">Enter your education details : </p>
         <form onSubmit={handleEducationDataSubmission}>
           <label htmlFor="collegename">Enter College name : </label>
@@ -377,7 +377,7 @@ function UserInput({
           </div>
         ))}
 
-        <hr className="border-black m-4" />
+        <hr className="border-black my-4" />
         <p className="input-title">Add your skills : </p>
         <input
           type="text"

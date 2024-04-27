@@ -26,7 +26,7 @@ function Register() {
     <div>
       {userLoggedIn && <Navigate to={"/"} replace={true} />}
 
-      <main className="w-full h-screen flex self-center place-content-center place-items-center bg-[#96B6C5]">
+      <main className="w-full h-screen flex self-center place-content-center place-items-center bg-[#96B6C5] max-sm:p-10">
         <div className="w-96 text-gray-600 space-y-5 p-4 shadow-xl border rounded-xl bg-white">
           <div className="text-center mb-6">
             <div className="mt-2">
