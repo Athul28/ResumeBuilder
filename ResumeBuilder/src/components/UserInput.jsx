@@ -394,7 +394,7 @@ function UserInput({
         </button>
         <button
           onClick={addSkillToBackend}
-          className="bg-cyan-700 m-2 p-2 text-white rounded-sm"
+          className="bg-green-600 text-white p-2 m-2"
         >
           Save
         </button>
