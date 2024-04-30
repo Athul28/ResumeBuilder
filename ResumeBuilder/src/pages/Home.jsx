@@ -12,7 +12,9 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import { db } from "../firebase/firebase";
-import { ThreeDots } from 'react-loading-icons'
+import { ThreeDots } from 'react-loading-icons';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Home() {
   const [users, setUsers] = useState([]);
@@ -69,8 +71,18 @@ function Home() {
     }
   }, [currentUser]);
 
+  const notify=()=>{
+    toast("Please LogIn to save",{
+      position: toast.POSITION.BOTTOM_RIGHT,
+    });
+  }
+
   const handleBackendDataSubmit = async (e) => {
     e.preventDefault();
+
+    if(!userLoggedIn){
+      toast.warning("Please LogIn to save");
+    }else{
 
     try {
       const userQuery = query(
@@ -101,15 +113,19 @@ function Home() {
         });
       }
       setError(null);
+      toast.success("Details saved")
     } catch (err) {
       setError("Failed to submit: " + err.message);
-    }
+    }}
   };
 
   //Skills
   const [skills, setSkills] = useState([]);
 
   const addSkillToBackend = async () => {
+    if(!userLoggedIn){
+      toast.warning("Please LogIn to save");
+    }else{
     try {
       const userQuery = query(
         collection(db, "users"),
@@ -138,9 +154,10 @@ function Home() {
         });
       }
       setError(null);
+      toast.success("Details saved")
     } catch (err) {
       setError("Failed to submit: " + err.message);
-    }
+    }}
   };
 
   const handleInputChange = (event) => {
@@ -191,7 +208,9 @@ function Home() {
   };
 
   const addExperienceToBackend = async () => {
-    console.log("Working");
+    if(!userLoggedIn){
+      toast.warning("Please LogIn to save");
+    }else{
     try {
       const userQuery = query(
         collection(db, "users"),
@@ -220,15 +239,19 @@ function Home() {
         });
       }
       setError(null);
+      toast.success("Details saved")
     } catch (err) {
       setError("Failed to submit: " + err.message);
-    }
+    }}
   };
 
   //Project
   const [projects, setProjects] = useState([]);
 
   const addProjectsToBackend = async () => {
+    if(!userLoggedIn){
+      toast.warning("Please LogIn to save");
+    }else{
     console.log("Working");
     try {
       const userQuery = query(
@@ -258,15 +281,19 @@ function Home() {
         });
       }
       setError(null);
+      toast.success("Details saved")
     } catch (err) {
       setError("Failed to submit: " + err.message);
-    }
+    }}
   };
 
   //Education
   const [education, setEducation] = useState([]);
 
   const addEducationToBackend = async () => {
+    if(!userLoggedIn){
+      toast.warning("Please LogIn to save");
+    }else{
     console.log("Working");
     try {
       const userQuery = query(
@@ -296,9 +323,10 @@ function Home() {
         });
       }
       setError(null);
+      toast.success("Details saved")
     } catch (err) {
       setError("Failed to submit: " + err.message);
-    }
+    }}
   };
 
 
@@ -338,6 +366,7 @@ function Home() {
             education={education}
             projects={projects}
           />
+          <ToastContainer className="max-sm:w-[200px] max-sm:m-5" />
         </div>
       )}
     </>

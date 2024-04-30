@@ -220,13 +220,15 @@ function UserInput({
           <br />
           <button type="submit" className="bg-cyan-700 text-white p-2 mt-2">
             Add Experience
-          </button>        <button
-          onClick={addExperienceToBackend}
-          className="bg-green-600 m-2 p-2 text-white rounded-sm"
-          formNoValidate
-        >
-          Save
-        </button>
+          </button>{" "}
+          <button
+            type="button"
+            onClick={addExperienceToBackend}
+            className="bg-green-600 m-2 p-2 text-white rounded-sm"
+            formNoValidate
+          >
+            Save
+          </button>
         </form>
 
         <div>
@@ -287,12 +289,15 @@ function UserInput({
           <br />
           <button type="submit" className="bg-cyan-700 text-white p-2 mt-2">
             Add Project
-          </button>        <button
-          onClick={addProjectsToBackend}
-          className="bg-green-600 text-white p-2 m-2" formNoValidate
-        >
-          Save
-        </button>
+          </button>{" "}
+          <button
+            type="button"
+            onClick={addProjectsToBackend}
+            className="bg-green-600 text-white p-2 m-2"
+            formNoValidate
+          >
+            Save
+          </button>
         </form>
 
         {projects.map((project, index) => (
@@ -355,18 +360,22 @@ function UserInput({
           <br />
           <button type="submit" className="bg-cyan-700 text-white p-2 mt-2">
             Add Details
-          </button>        <button
-          onClick={addEducationToBackend}
-          className="bg-green-600 text-white p-2 m-2"
-          formNoValidate
-        >
-          Save
-        </button>
+          </button>{" "}
+          <button
+            type="button"
+            onClick={addEducationToBackend}
+            className="bg-green-600 text-white p-2 m-2"
+            formNoValidate
+          >
+            Save
+          </button>
         </form>
 
         {education.map((edu, index) => (
-          <div key={index}
-          className="flex w-[250px] rounded-md mx-auto text-white justify-between p-2 bg-cyan-900 mt-3">
+          <div
+            key={index}
+            className="flex w-[250px] rounded-md mx-auto text-white justify-between p-2 bg-cyan-900 mt-3"
+          >
             <p>{edu.collegeName}</p>
             <div
               className="bg-red-600 h-fit my-auto text-xl text-white p-1 rounded-sm mx-2 cursor-pointer"
